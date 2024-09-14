@@ -1,0 +1,41 @@
+.section{
+    width: 1200px;
+    margin: auto;
+    /* border: 2px solid red; */
+    display: flex;
+    text-align: center;
+    flex-wrap: wrap;
+    
+
+   
+}
+
+.section img{
+  width: 100%;
+  border-radius: 20px 20px 0px 0px;
+}
+#courseitem {     
+    background-color: rgb(223, 220, 220);
+    margin: 10px 50px;
+    border-radius: 20px 20px 20px 20px;
+    width: 300px;
+     
+   
+
+}
+ 
+  
+#courseitem img {
+    display: block;  
+    margin-bottom: 10px; /* Adjust this value to decrease space below the image */
+  }
+  
+#courseitem h1 {
+    margin: 10px 0; /* Adjust top and bottom margins to decrease space above and below the heading */
+  }
+  
+#courseitem p {
+    padding: 5px;
+    margin: 10px; /* Remove margins to reduce space around the paragraph */
+  }
+  
