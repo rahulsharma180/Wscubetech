@@ -75,11 +75,11 @@ export default function Header() {
       >
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
+            {/* <span className="sr-only">Your Company</span> */}
             <img
               alt=""
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              className="h-8 w-auto"
+              src="https://digitalamitchoudhary.com/wp-content/uploads/2022/05/digital-amit-chodhary.png?color=indigo&shade=600"
+              className="h-12 w-auto"
             />
           </a>
         </div>
