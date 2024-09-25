@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import Header from './Component/Header'
+
 import Products from './Component/Products'
 import Footer from './Component/Footer'
 
@@ -25,7 +25,7 @@ function Home() {
     
   return (
     <> 
-      <Header/>
+    
       <Products allProduct = {products} loading = {loading}/>
        <Footer/> 
 
