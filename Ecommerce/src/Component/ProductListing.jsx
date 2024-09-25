@@ -93,9 +93,22 @@ export default function ProductListing() {
 
   const [products, setProducts] = useState([]);
    
-  const [loading, setloading] = useState(true)
+  const [loading, setloading] = useState(true);
+
+  const [categories, setCategories] = useState([]);
 
 
+  useEffect(() => {
+    fetch('https://dummyjson.com/products/categories')
+    .then((res) => {
+        return res.json();
+    }).then((result)=>{
+      setCategories(result)
+                console.log(result)
+    })
+
+}, [ ])
+ 
   useEffect(() => {
       fetch('https://dummyjson.com/products')
       .then((res) => {
@@ -271,18 +284,18 @@ export default function ProductListing() {
                     </h3>
                     <DisclosurePanel className="pt-6">
                       <div className="space-y-4">
-                        {section.options.map((option, optionIdx) => (
-                          <div key={option.value} className="flex items-center">
+                        {categories.map((option, optionIdx) => (
+                          <div key={optionIdx} className="flex items-center">
                             <input
-                              defaultValue={option.value}
-                              defaultChecked={option.checked}
+                              defaultValue={optionIdx}
+                              defaultChecked=""
                               id={`filter-${section.id}-${optionIdx}`}
                               name={`${section.id}[]`}
-                              type="checkbox"
+                              type="radio"
                               className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                             />
                             <label htmlFor={`filter-${section.id}-${optionIdx}`} className="ml-3 text-sm text-gray-600">
-                              {option.label}
+                              {option.name}
                             </label>
                           </div>
                         ))}
@@ -293,7 +306,7 @@ export default function ProductListing() {
               </form>
 
               {/* Product grid */}
-              <div className="lg:col-span-3"><Products allProduct = {products} loading = {loading}/></div>
+              <div   className="lg:col-span-3"><Products allProduct = {products} loading = {loading}/></div>
             </div>
           </section>
         </main>
