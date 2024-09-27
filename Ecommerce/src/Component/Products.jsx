@@ -21,8 +21,8 @@ export default function Products({ allProduct, loading }) {
             ""
           )}
           {allProduct.map((product) => (
-            <Link to={`/products/product-details/${product.id}`}>
-              <div key={product.id} className="group relative   ">
+            <Link to={`/products/product-details/${product.id}`}  key={product.id}>
+              <div className="group relative   ">
                 <div className="relative aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                   <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
                     39% OFF
@@ -37,10 +37,10 @@ export default function Products({ allProduct, loading }) {
                 <div className="mt-4 flex justify-between ">
                   <div>
                     <h3 className="text-xl font-bold ">
-                      <a href={product.href}>
+                     
                         <span aria-hidden="true" className="absolute inset-0" />
                         {product.title}
-                      </a>
+                    
                     </h3>
 
                     <p className="mt-1 text-sm text-gray-500">
