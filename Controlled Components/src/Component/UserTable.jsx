@@ -1,7 +1,7 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
 
-export default function UserTable({useData,userDelete,userUpdate} ) {
+export default function UserTable({userData, updateUser, deleteUser} ) {
   return (
     <>
       
@@ -17,15 +17,15 @@ export default function UserTable({useData,userDelete,userUpdate} ) {
           </tr>
         </thead>
         <tbody >
-          { useData.length!=0 ? 
-            useData.map((v,i)=>{
+          { userData.length!=0 ? 
+            userData.map((v,i)=>{
               return(<tr key={i}>
                 <td>{++i}</td>
                 <td>{v.en_name}</td>
                 <td>{v.en_contact}</td>
                 <td>{v.en_email}</td>
-                <td><button onClick={()=>userUpdate(v.en_id)}>Edit</button></td>
-                <td><button onClick={()=>userDelete(v.en_id)}>Delete</button></td>
+                <td><button onClick={() => updateUser(v.en_id) }>Edit</button></td>
+                <td><button onClick={() => deleteUser(v.en_id) }>Delete</button></td>
               </tr>)
             })
            

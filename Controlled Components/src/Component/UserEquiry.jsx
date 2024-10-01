@@ -5,32 +5,33 @@ import { useState } from "react";
 import axios from "axios";
 
 export default function UserEquiry() {
-     const [userData, setUserData] = useState([])
+  let [userData, setUserData] = useState([]);
+  let [apiFetch, setApiFetch] = useState(true);
 
-    let userFetch = ()=>{ let APIURL = 'https://wscubetech.co/form-api/view_user.php'
-        axios.get(APIURL)
-        .then((response)=>{
-            setUserData(response.data.dataList);
-         })
-         .catch((error)=>{
+  const api = {apiFetch, setApiFetch }
 
-         })}
+  let userFetch = () => {
+    let APIURL = 'https://wscubetech.co/form-api/view_user.php';
+    axios
+      .get(APIURL)
+      .then((response) => {
+        console.log("response");
+        setUserData(response.data.dataList);
+      })
+      .catch((error) => {});
+  };
 
+  let updateUserData = (id) => {
+    console.log("Recored Updated" +id);
+  };
 
-         let userDataDelete=(id)=>{
-            console.log('delete' +id)
-         }
+  let deletUserData = (id) => {
+    console.log("delete" +id);
+  };
 
-         let updateUserData=(id)=>{
-            console.log('Recored Updated' +id)
-         }
-
-
-
-
-     useEffect(()=>{
-        userFetch();
-     },[])
+  useEffect(() => {
+    userFetch();
+  }, [apiFetch]);
 
   return (
     <div>
@@ -38,11 +39,10 @@ export default function UserEquiry() {
         <div className="container">
           <div className="row">
             <div className="col-md-12 py-4">
-              
               <h1>User Enquiry Form</h1>
-            </div> 
+            </div>
             <div className="col-md-12 ">
-              <MyForm />
+              <MyForm api={api} />
             </div>
           </div>
           <div className="row">
@@ -51,7 +51,11 @@ export default function UserEquiry() {
             </div>
 
             <div className="col-md-12">
-              <UserTable useData={userData} userDelete={userDataDelete} userUpdate={updateUserData}/>
+              <UserTable
+                userData={userData}
+                deleteUser={deletUserData}
+                updateUser={updateUserData}
+              />
             </div>
           </div>
         </div>
