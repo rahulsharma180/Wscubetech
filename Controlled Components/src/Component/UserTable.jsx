@@ -1,43 +1,47 @@
-import React from "react";
-import Table from "react-bootstrap/Table";
+  import React from "react";
+  import Table from "react-bootstrap/Table";
 
-export default function UserTable({userData, updateUser, deleteUser} ) {
-  return (
-    <>
+  export default function UserTable({userData, updateUser, deleteUser} ) {
+
+
+    return (
+      <>
       
-      <Table striped bordered hover variant="dark">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Mobile</th>
-            <th>Email</th>
-            <th>Edit</th>
-            <th>Delete</th>
+      
+        
+        <Table striped bordered hover variant="dark">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Mobile</th>
+              <th>Email</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody >
+            { userData.length!=0 ? 
+              userData.map((v,i)=>{
+                return(<tr key={i}>
+                  <td>{++i}</td>
+                  <td>{v.en_name}</td>
+                  <td>{v.en_contact}</td>
+                  <td>{v.en_email}</td>
+                  <td><button onClick={() => updateUser(v.en_id) } onChange={(event) => checkVaild(event)} >Edit</button></td>
+                  <td><button onClick={() => deleteUser(v.en_id) }>Delete</button></td>
+                </tr>)
+              })
+            
+            :<tr>
+            <td colSpan={6}className="text-center">No Recored found!!</td>
+            
           </tr>
-        </thead>
-        <tbody >
-          { userData.length!=0 ? 
-            userData.map((v,i)=>{
-              return(<tr key={i}>
-                <td>{++i}</td>
-                <td>{v.en_name}</td>
-                <td>{v.en_contact}</td>
-                <td>{v.en_email}</td>
-                <td><button onClick={() => updateUser(v.en_id) }>Edit</button></td>
-                <td><button onClick={() => deleteUser(v.en_id) }>Delete</button></td>
-              </tr>)
-            })
-           
-          :<tr>
-          <td colSpan={6}className="text-center">No Recored found!!</td>
-           
-        </tr>
-          }
-          
-           
-        </tbody>
-      </Table>
-    </>
-  );
-}
+            }
+            
+            
+          </tbody>
+        </Table>
+      </>
+    );
+  }

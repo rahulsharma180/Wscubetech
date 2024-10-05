@@ -1,12 +1,12 @@
 import axios, { toFormData } from "axios";
 import { useState, useRef } from "react";
-import { ToastContainer, Bounce,toast } from 'react-toastify';
+import { ToastContainer, Bounce, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-function MyForm({ api }) {
-  
+function MyForm({ api, input, setInput, isEditMode, setIsEditMode }) {
+
   const [inputValidity, setInputValidity] = useState({
     uname: true,
     email: true,
@@ -14,10 +14,10 @@ function MyForm({ api }) {
     password: true,
   });
 
- 
 
-   // Create a ref for the form
-  const formRef = useRef();
+
+  // Create a ref for the form
+  // const formRef = useRef();
 
   let { apiFetch, setApiFetch } = api;
   const [apiStatus, setApiStatus] = useState(0);
@@ -46,7 +46,7 @@ function MyForm({ api }) {
         email: event.target.email.value,
         contact: event.target.mobile_number.value,
         password: event.target.password.value,
-        id: "",
+        id: input.id,
       };
       console.log(userData);
 
@@ -57,16 +57,24 @@ function MyForm({ api }) {
           console.log(response);
           setApiFetch(!apiFetch);
           setApiStatus(1);
+          setInput(
+            {
+              uname: '',
+              email: '',
+              mobile_number: '',
+              password: '',
+              id: ""
+            }
+          )
 
-          
-          formRef.current.reset();
+          // formRef.current.reset();
           setTimeout(() => {
             setApiStatus(0);
           }, 3000);
 
-          toast('🦄 Wow so easy!', {
+          toast.success('Data save Succesfully', {
             position: "top-right",
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -74,7 +82,7 @@ function MyForm({ api }) {
             progress: undefined,
             theme: "light",
             transition: Bounce,
-            });
+          });
         })
         .catch((error) => {
           console.log("Something went wrong", error);
@@ -90,9 +98,9 @@ function MyForm({ api }) {
       setTimeout(() => {
         setApiStatus(0);
       }, 3000);
-      toast('🦄 Wow so easy!', {
+      toast.warn('Please fill out all fields correctly!', {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -100,17 +108,25 @@ function MyForm({ api }) {
         progress: undefined,
         theme: "light",
         transition: Bounce,
-        });
+      });
+
     }
   };
 
 
   let checkVaild = (event) => {
-    if (event.target.value == "") {
-      event.target.className = " form-control is-invalid";
+    let data = { ...input }
+    // console.log(data)
+    data[event.target.name] = event.target.value;
+    setInput(data);
+
+
+    if (event.target.value === "") {
+      event.target.className ="form-control is-invalid";
+
       event.target.reset;
     } else {
-      event.target.className = " form-control  ";
+      event.target.className ="form-control";
       setApiStatus(0);
     }
   };
@@ -156,17 +172,29 @@ function MyForm({ api }) {
       ) : (
         ""
       )}
-        <ToastContainer />
-
-      <Form autoComplete="off" onSubmit={formHandler} ref={formRef}>
-        <Form.Group className="mb-3" controlId="formBasicName">
+      <ToastContainer />
+      {/* ref={formRef} */}
+      <Form autoComplete="off" onSubmit={formHandler} >
+        {/* <Form.Group className="mb-3" controlId="formBasicName">
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
             name="uname"
             className={inputValidity.uname ? "" : "form-control is-invalid"}
-            onChange={(e) => checkVaild(e)}
+            onChange={(event) => checkVaild(event)}
+            placeholder="Enter your name" value={input.uname}
+          />
+          <div className="invalid-feedback">Please enter your name</div>
+        </Form.Group> */}
+        <Form.Group className="mb-3" controlId="formBasicName">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            type="text"
+            name="uname"
+            className={`${inputValidity.uname ? "" : "is-invalid"} ${isEditMode ? "is-valid" : ""}`}
+            onChange={(event) => checkVaild(event)}
             placeholder="Enter your name"
+            value={input.uname}
           />
           <div className="invalid-feedback">Please enter your name</div>
         </Form.Group>
@@ -178,8 +206,8 @@ function MyForm({ api }) {
             className={
               inputValidity.mobile_number ? "" : "form-control is-invalid"
             }
-            onChange={checkVaild}
-            placeholder="Enter your Number"
+            onChange={(event) => checkVaild(event)}
+            placeholder="Enter your Number" value={input.mobile_number}
           />
           <div className="invalid-feedback">
             Please enter your Mobile Number
@@ -193,7 +221,7 @@ function MyForm({ api }) {
             placeholder="Enter your email"
             autoComplete="username"
             className={inputValidity.email ? "" : "form-control is-invalid"}
-            onChange={checkVaild}
+            onChange={(event) => checkVaild(event)} value={input.email}
           />
           <div className="invalid-feedback">Please enter your email</div>
         </Form.Group>
@@ -206,12 +234,12 @@ function MyForm({ api }) {
             placeholder="Password"
             autoComplete="current-password"
             className={inputValidity.password ? "" : "form-control is-invalid"}
-            onChange={checkVaild}
-          />{" "}
+            onChange={(event) => checkVaild(event)} value={input.password}
+          />
           <div className="invalid-feedback">Please enter your password</div>
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" >
           Submit
         </Button>
         <Button

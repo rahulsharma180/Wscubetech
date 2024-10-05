@@ -3,29 +3,74 @@ import UserTable from "./UserTable";
 import MyForm from "./MyForm";
 import { useState } from "react";
 import axios from "axios";
-import { ToastContainer, Bounce,toast } from 'react-toastify';
+import { Bounce,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function UserEquiry() {
+  const [isEditMode, setIsEditMode] = useState(false);
+
+
+
   let [userData, setUserData] = useState([]);
   let [apiFetch, setApiFetch] = useState(true);
-
+  let [input, setInput] = useState({
+  
+      uname:'',
+      email: '',
+      mobile_number: '',
+      password: '',
+      id: "",
+    
+  });
   const api = {apiFetch, setApiFetch }
 
+
+ 
   let userFetch = () => {
     let APIURL = 'https://wscubetech.co/form-api/view_user.php';
     axios
       .get(APIURL)
       .then((response) => {
-        console.log("response");
+        // console.log("response");
         setUserData(response.data.dataList);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        
+      });
   };
 
+   //************** Edit Button Apifetch  *************
+
+
+
   let updateUserData = (id) => {
-    console.log("Recored Updated" +id);
-  };
+    axios.get('https://wscubetech.co/form-api/view_user.php',{
+      params:{
+        id:id
+      }
+    }).then((response)=>{
+      console.log(response.data)
+    let userData={
+      uname: response.data.dataList.en_name,
+      email: response.data.dataList.en_email,
+      mobile_number: response.data.dataList.en_contact,
+      password: response.data.dataList.en_password,
+      id:response.data.dataList.en_id,}
+      setInput(userData);
+      setIsEditMode(true);
+      // {setTimeout(() => {
+      //   setIsEditMode(false); // Set edit mode to true
+      //         }, 1000);}
+
+  
+      }).catch((error)=>{
+
+    })
+    
+};
+
+
+  
 
   let deletUserData = (id) => {
     console.log("delete" +id);
@@ -78,7 +123,7 @@ export default function UserEquiry() {
               <h1>User Enquiry Form</h1>
             </div>
             <div className="col-md-12 ">
-              <MyForm api={api} />
+        <MyForm api={api} input={input} setInput={setInput} isEditMode={isEditMode} />
             </div>
           </div>
           <div className="row">
