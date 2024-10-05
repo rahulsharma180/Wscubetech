@@ -1,14 +1,11 @@
   import React from "react";
   import Table from "react-bootstrap/Table";
 
-  export default function UserTable({userData, updateUser, deleteUser} ) {
-
-
+  export default function UserTable({userData, updateUser, deleteUser,handleClick} ) {
+     
     return (
       <>
-      
-      
-        
+                
         <Table striped bordered hover variant="dark">
           <thead>
             <tr>
@@ -28,7 +25,7 @@
                   <td>{v.en_name}</td>
                   <td>{v.en_contact}</td>
                   <td>{v.en_email}</td>
-                  <td><button onClick={() => updateUser(v.en_id) } onChange={(event) => checkVaild(event)} >Edit</button></td>
+                  <td><button onClick={() => {updateUser(v.en_id); handleClick()}} >Edit</button></td>
                   <td><button onClick={() => deleteUser(v.en_id) }>Delete</button></td>
                 </tr>)
               })
