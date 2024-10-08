@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
-
-
 import Products from './Component/Products'
 import Footer from './Component/Footer'
+import ShoppingCart from './Component/ShoppingCart'
 
+import Header from './Component/Header'; // Import your Header component
 function Home() {
+
+
+    const [open, setOpen] = useState(true)
+  
 
     const [products, setProducts] = useState([]);
    
@@ -24,8 +28,8 @@ function Home() {
     }, [ ])
     
   return (
-    <> 
-    
+    <> <Header  open={open} setOpen={setOpen} />
+      <ShoppingCart open={open} setOpen={setOpen}/>
       <Products allProduct = {products} loading = {loading}/>
        <Footer/> 
 

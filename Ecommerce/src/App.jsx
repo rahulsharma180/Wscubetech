@@ -6,7 +6,7 @@ import './App.css';
 function App() {
   return (
     <>
-      <Header />
+      
       <main>
         <Outlet /> {/* This is where child routes will be rendered */}
       </main>
