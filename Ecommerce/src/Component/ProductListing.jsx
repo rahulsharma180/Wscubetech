@@ -344,21 +344,34 @@ export default function ProductListing() {
                     </h3>
                     <DisclosurePanel className="pt-6">
                       <div className="space-y-4">
-                       <input type="radio"
+                       {/* <input type="radio"
                               className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" 
                             />
-                            <label
+                            <Link to={`/products`}><label
                               className="ml-3 text-sm text-gray-600"
                              >
                             All product
-                            </label>
-                        {categories.map((option, optionIdx) => (
+                            </label></Link> */}
+                              <input
+                        type="radio"
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                        name="category"
+                        id="all-products"
+                        value="all-products"
+                        onChange={() => filterCategory("")} // Set categoryName to "" to show all products
+                        checked={categoryName === ""} // Keep the radio button checked when categoryName is empty
+                      />
+                      <label htmlFor="all-products" className="ml-3 text-sm text-gray-600 cursor-pointer">
+                        All Products
+                      </label>
+                          {categories.map((option, optionIdx) => (
                           <div key={optionIdx} className="flex items-center"   onClick={() => filterCategory(option.slug)}>
                             <input
                               defaultValue={optionIdx}
                               defaultChecked=""
                               id={`filter-${section.id}-${optionIdx}`}
-                              name={`${section.id}[]`}
+                              // name={`${section.id}[]`}
+                              name="category"
                               type="radio"
                               className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" 
                             />
